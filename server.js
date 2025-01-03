@@ -7,14 +7,17 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
-// Configurar CORS para permitir solo el origen específico
-const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "*",
-};
-
-app.use(cors(corsOptions));
-
 app.use(express.json());
+// Configurar CORS para permitir solo el origen específico
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://coffe-ai.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
+});
 
 const cohereClient = new CohereClientV2({
   token: process.env.COHERE_API_KEY,
