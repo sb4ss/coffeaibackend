@@ -20,7 +20,7 @@ app.post("/api/coffe", async (req, res) => {
   const { prompt } = req.body;
   try {
     const response = await cohereClient.chat({
-      model: "command-r-plus",
+      model: "command-a-03-2025",
       messages: [
         {
           role: "user",
